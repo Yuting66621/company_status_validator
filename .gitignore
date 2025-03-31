@@ -1,6 +1,7 @@
 selenium-3.141.0/
 selenium.tar.gz
 .venv/
+.vscode/
 
 
 .codegpt
