@@ -4,9 +4,14 @@
 ![python](https://img.shields.io/badge/python-3.6+-green)
 ![selenium](https://img.shields.io/badge/selenium-latest-orange)
 
-A tool for validating business entity information by scraping state business registration websites. This project includes two scrapers:
-- **Delaware Business Entity Search**: Checks if companies exist in Delaware's business registry
-- **North Carolina Business Entity Search**: Searches for company information in North Carolina's Secretary of State database
+A tool for validating company information by checking their active/inactive status through global business registries.
+
+**Main Script**:
+- **OpenCorporates Company Status Checker** (`opencorporates_checker.py`): Validates company active/inactive status by searching OpenCorporates
+
+**Reference Scripts** (from previous work):
+- `dw_scraper.py`: Delaware business registry scraper (reference implementation)
+- `nc_scraper.py`: North Carolina Secretary of State scraper (reference implementation)
 
 ## Table of Contents
 
@@ -14,8 +19,8 @@ A tool for validating business entity information by scraping state business reg
 - [Installation](#installation)
 - [Setup](#setup)
 - [Usage](#usage)
-  - [Delaware Scraper](#delaware-scraper)
-  - [North Carolina Scraper](#north-carolina-scraper)
+  - [OpenCorporates Checker](#opencorporates-checker)
+- [Reference Scrapers](#reference-scrapers)
 - [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
@@ -75,49 +80,47 @@ Prepare a spreadsheet (CSV or Excel) with company names:
 
 ## Usage
 
+### OpenCorporates Checker
+
+This is the main script for validating company status through OpenCorporates, a comprehensive international business registry database.
+
+1. Run the script with your input file (CSV or Excel):
+   ```bash
+   python opencorporates_checker.py your_company_list.csv
+   ```
+
+2. Results:
+   - Reads company names from the first column of your input file
+   - Outputs a file with company status: `active`, `inactive`, or `No result found`
+   - Includes exact and related match columns for manual verification
+   - Handles OpenCorporates CAPTCHA with optional manual verification in GUI mode
+   - Supports both CSV and Excel output formats
+
+## Reference Scrapers
+
+The following scripts were used as reference implementations:
+
 ### Delaware Scraper
 
 The Delaware scraper checks if companies are registered in Delaware's business registry.
 
-1. If needed, update the ChromeDriver path in the `search_delaware_business` function:
-   ```python
-   service = Service(executable_path="chromedriver-linux64/chromedriver")  # Update if your path is different
-   ```
-
-2. Run the script with your input file as a command-line argument:
+1. Run the script with your input file as a command-line argument:
    ```bash
    python dw_scraper.py your_company_list.csv
    ```
 
-   You can also specify an output file name as a second argument:
-   ```bash
-   python dw_scraper.py your_company_list.csv custom_output_name.xlsx
-   ```
-
-3. Results:
-   - The script will process each company in your list
-   - Progress information appears in the terminal
-   - Results are saved in `search_results.xlsx` (or your custom output name)
-   - The Excel file shows which companies have records available in Delaware
+2. Results are saved in `search_results.xlsx`
 
 ### North Carolina Scraper
 
 The North Carolina scraper retrieves company information from NC Secretary of State.
 
-1. Before running, update the ChromeDriver path in the script:
-   ```python
-   service = Service(executable_path="chromedriver.exe")  # Update with your path
-   ```
-
-2. Run the script with your input file as a command-line argument:
+1. Run the script with your input file as a command-line argument:
    ```bash
    python nc_scraper.py your_company_list.csv
    ```
 
-3. Results:
-   - The script will search for each company from the 'Employment Company Name' column
-   - Results are saved in `ncsos_results.csv`
-   - The CSV file contains company names, record counts, SOSID, formation dates, and status
+2. Results are saved in `ncsos_results.csv`
 
 ## Troubleshooting
 
